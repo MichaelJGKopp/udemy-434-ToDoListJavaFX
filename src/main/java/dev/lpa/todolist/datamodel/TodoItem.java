@@ -2,13 +2,13 @@ package dev.lpa.todolist.datamodel;
 
 import java.time.LocalDate;
 
-public class ToDoItem {
+public class TodoItem {
 
   private String shortDescription;
   private String details;
   private LocalDate deadline;
 
-  public ToDoItem(String shortDescription, String details, LocalDate deadline) {
+  public TodoItem(String shortDescription, String details, LocalDate deadline) {
     this.shortDescription = shortDescription;
     this.details = details;
     this.deadline = deadline;
