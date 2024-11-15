@@ -2,6 +2,8 @@ package dev.lpa.todolist;
 
 import dev.lpa.todolist.datamodel.TodoItem;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -11,6 +13,9 @@ import java.util.List;
 public class Controller {
 
   private List<TodoItem> todoItems;
+
+  @FXML
+  private ListView<TodoItem> todoListView;
 
   public void initialize() {
     TodoItem item1 = new TodoItem(
@@ -35,5 +40,7 @@ public class Controller {
       LocalDate.of(2024, Month.APRIL, 20));
 
     todoItems = new ArrayList<>(List.of(item1, item2, item3, item4, item5));
+    todoListView.getItems().setAll(todoItems);
+    todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
   }
 }
