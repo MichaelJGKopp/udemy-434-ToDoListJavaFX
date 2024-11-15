@@ -53,6 +53,7 @@ public class Controller {
     todoItems = new ArrayList<>(List.of(item1, item2, item3, item4, item5));
     todoListView.getItems().setAll(todoItems);
     todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    todoListView.getSelectionModel().selectFirst(); // select first to do list item
   }
 
   @FXML

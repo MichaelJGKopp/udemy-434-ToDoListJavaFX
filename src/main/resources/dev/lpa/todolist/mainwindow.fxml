@@ -18,7 +18,7 @@
         </ListView>
     </left>
     <center>
-        <VBox>
+        <VBox style="-fx-background-color: white">
             <!-- VBox.vgrow="ALWAYS" so textArea fills it out -->
             <TextArea fx:id="itemDetailsTextArea" VBox.vgrow="ALWAYS"/>
             <HBox>
