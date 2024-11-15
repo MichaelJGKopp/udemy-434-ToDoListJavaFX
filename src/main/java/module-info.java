@@ -3,6 +3,6 @@ module dev.lpa.udemy434todolist {
   requires javafx.fxml;
 
 
-  opens dev.lpa.udemy434todolist to javafx.fxml;
-  exports dev.lpa.udemy434todolist;
+  opens dev.lpa.todolist to javafx.fxml;
+  exports dev.lpa.todolist;
 }

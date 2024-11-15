@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>dev.lpa.udemy434todolist/dev.lpa.udemy434todolist.HelloApplication</mainClass>
+                            <mainClass>dev.lpa.udemy434todolist/dev.lpa.todolist.Main</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
