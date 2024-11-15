@@ -13,7 +13,8 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="dev.lpa.todolist.Controller">
     <left>
-        <ListView fx:id="todoListView" onMouseClicked="#handleClickListView">
+        <!-- onMouseClicked="#handleClickListView" not needed abymore -->
+        <ListView fx:id="todoListView">
 
         </ListView>
     </left>
