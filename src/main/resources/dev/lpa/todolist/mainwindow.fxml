@@ -8,6 +8,8 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="dev.lpa.todolist.Controller">
     <left>
@@ -16,6 +18,21 @@
         </ListView>
     </left>
     <center>
-        <TextArea fx:id="itemDetailsTextArea"/>
+        <VBox>
+            <!-- VBox.vgrow="ALWAYS" so textArea fills it out -->
+            <TextArea fx:id="itemDetailsTextArea" VBox.vgrow="ALWAYS"/>
+            <HBox>
+                <Label text="Due: ">
+                    <font>
+                        <Font name="Times New Roman bold" size="20"/>
+                    </font>
+                </Label>
+                <Label fx:id="deadlineLabel">
+                    <font>
+                        <Font name="Times New Roman bold" size="20"/>
+                    </font>
+                </Label>
+            </HBox>
+        </VBox>
     </center>
 </BorderPane>

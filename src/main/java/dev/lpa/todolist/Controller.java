@@ -2,14 +2,18 @@ package dev.lpa.todolist;
 
 import dev.lpa.todolist.datamodel.TodoItem;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Controller {
 
@@ -19,7 +23,10 @@ public class Controller {
   private ListView<TodoItem> todoListView;
 
   @FXML
-  public TextArea itemDetailsTextArea;
+  private TextArea itemDetailsTextArea;
+
+  @FXML
+  private Label deadlineLabel;
 
   public void initialize() {
     TodoItem item1 = new TodoItem(
@@ -51,11 +58,12 @@ public class Controller {
   @FXML
   public void handleClickListView() {
     TodoItem item = todoListView.getSelectionModel().getSelectedItem();
-    StringBuilder sb = new StringBuilder(item.getDetails());
-    sb.append("\n\n\n\n")
-      .append("Due: ")
-      .append(item.getDeadline().toString());
-    itemDetailsTextArea.setText(sb.toString());
 //    System.out.println("The selected item is " +  item);
+//    StringBuilder sb = new StringBuilder(item.getDetails());
+//    sb.append("\n\n\n\n")
+//      .append("Due: ")
+//      .append(item.getDeadline().toString());
+    itemDetailsTextArea.setText(item.getDetails());
+    deadlineLabel.setText(item.getDeadline().toString());
   }
 }
