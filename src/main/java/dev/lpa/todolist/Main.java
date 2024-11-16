@@ -9,6 +9,17 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
+
+  @Override
+  public void init() throws Exception {
+    try {
+      TodoData.getInstance().loadTodoItems();
+
+    } catch (IOException e) {
+      System.err.println("Error loading items from file: " + e.getMessage());
+    }
+  }
+
   @Override
   public void start(Stage stage) throws IOException {
     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("mainwindow.fxml"));
@@ -26,6 +37,7 @@ public class Main extends Application {
   public void stop() throws Exception {
     try {
       TodoData.getInstance().storeTodoItems();
+
     } catch (IOException e) {
       System.out.println("Error saving: " + e.getMessage());
     }
