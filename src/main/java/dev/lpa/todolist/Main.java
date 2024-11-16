@@ -1,5 +1,6 @@
 package dev.lpa.todolist;
 
+import dev.lpa.todolist.datamodel.TodoData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,5 +20,14 @@ public class Main extends Application {
 
   public static void main(String[] args) {
     launch();
+  }
+
+  @Override
+  public void stop() throws Exception {
+    try {
+      TodoData.getInstance().storeTodoItems();
+    } catch (IOException e) {
+      System.out.println("Error saving: " + e.getMessage());
+    }
   }
 }
