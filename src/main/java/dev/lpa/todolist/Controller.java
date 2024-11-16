@@ -62,6 +62,8 @@ public class Controller {
           if(newValue != null) {
             TodoItem item = todoListView.getSelectionModel().getSelectedItem();
             itemDetailsTextArea.setText(item.getDetails());
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+            deadlineLabel.setText(item.getDeadline().format(dtf));
           }
         }
       });
