@@ -10,8 +10,26 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
-<BorderPane xmlns:fx="http://javafx.com/fxml"
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<BorderPane fx:id="mainBorderPane" xmlns:fx="http://javafx.com/fxml"
             fx:controller="dev.lpa.todolist.Controller">
+    <top>
+        <MenuBar>
+            <Menu text="File">
+                <MenuItem text="New..." onAction="#showNewItemDialog"/>
+                <SeparatorMenuItem/>
+                <MenuItem text="Exit"/>
+            </Menu>
+            <Menu text="File2">
+                <MenuItem text="New...2"/>
+                <SeparatorMenuItem/>
+                <MenuItem text="Exit2"/>
+            </Menu>
+        </MenuBar>
+    </top>
     <left>
         <!-- onMouseClicked="#handleClickListView" not needed abymore -->
         <ListView fx:id="todoListView">
