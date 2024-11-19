@@ -68,7 +68,7 @@ public class Controller {
         }
       });
 
-    todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());
+    todoListView.setItems(TodoData.getInstance().getTodoItems()); // data binding
     todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     todoListView.getSelectionModel().selectFirst(); // select first to do list item
   }
@@ -97,11 +97,11 @@ public class Controller {
     if(result.isPresent() && result.get() == ButtonType.OK) {
       DialogController controller = fxmlLoader.getController();
       TodoItem newItem = controller.processResults();  // add item to todoList from dialog fields
-      todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());  // update visual list
+//      todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());  // update visual list
       todoListView.getSelectionModel().select(newItem); // select the just added Item
-      System.out.println("OK pressed");
-    } else {
-      System.out.println("Cancel pressed");
+//      System.out.println("OK pressed");
+//    } else {
+//      System.out.println("Cancel pressed");
     }
   }
 
