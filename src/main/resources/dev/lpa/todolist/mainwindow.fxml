@@ -39,7 +39,7 @@
     <center>
         <VBox style="-fx-background-color: white">
             <!-- VBox.vgrow="ALWAYS" so textArea fills it out -->
-            <TextArea fx:id="itemDetailsTextArea" VBox.vgrow="ALWAYS"/>
+            <TextArea fx:id="itemDetailsTextArea" VBox.vgrow="ALWAYS" wrapText="true"/>
             <HBox>
                 <Label text="Due: ">
                     <font>
