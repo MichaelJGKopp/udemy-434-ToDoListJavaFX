@@ -6,18 +6,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 public class Controller {
@@ -84,9 +77,11 @@ public class Controller {
   public void showNewItemDialog() {
     Dialog<ButtonType> dialog = new Dialog<>();
     dialog.initOwner(mainBorderPane.getScene().getWindow());  // parent disabled while dialog
+    FXMLLoader fxmlLoader = new FXMLLoader();
+    fxmlLoader.setLocation(getClass().getResource("todoItemDialog.fxml"));
     try {
-      Parent root = FXMLLoader.load(getClass().getResource("todoItemDialog.fxml"));
-      dialog.getDialogPane().setContent(root);
+      dialog.getDialogPane().setContent(fxmlLoader.load());
+
     } catch(IOException e) {
       System.out.println("Couldn't load the dialog");
       e.printStackTrace();
@@ -98,6 +93,10 @@ public class Controller {
 
     Optional<ButtonType> result = dialog.showAndWait();
     if(result.isPresent() && result.get() == ButtonType.OK) {
+      DialogController controller = fxmlLoader.getController();
+      TodoItem newItem = controller.processResults();  // add item to todoList from dialog fields
+      todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());  // update visual list
+      todoListView.getSelectionModel().select(newItem); // select the just added Item
       System.out.println("OK pressed");
     } else {
       System.out.println("Cancel pressed");
