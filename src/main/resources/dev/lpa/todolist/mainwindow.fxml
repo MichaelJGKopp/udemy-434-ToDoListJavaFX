@@ -1,57 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Tooltip?>
 <BorderPane fx:id="mainBorderPane" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="dev.lpa.todolist.Controller">
-    <top>
-        <MenuBar>
-            <Menu text="File">
-                <MenuItem text="New..." onAction="#showNewItemDialog"/>
-                <SeparatorMenuItem/>
-                <MenuItem text="Exit"/>
-            </Menu>
-            <Menu text="File2">
-                <MenuItem text="New...2"/>
-                <SeparatorMenuItem/>
-                <MenuItem text="Exit2"/>
-            </Menu>
-        </MenuBar>
-    </top>
-    <left>
-        <!-- onMouseClicked="#handleClickListView" not needed abymore -->
-        <ListView fx:id="todoListView" onKeyPressed="#handleKeyPressed">
+  fx:controller="dev.lpa.todolist.Controller">
+  <top>
+    <VBox>
+      <MenuBar>
+        <Menu text="File">
+          <MenuItem text="New..." onAction="#showNewItemDialog"/>
+          <SeparatorMenuItem/>
+          <MenuItem text="Exit"/>
+        </Menu>
+        <Menu text="File2">
+          <MenuItem text="New...2"/>
+          <SeparatorMenuItem/>
+          <MenuItem text="Exit2"/>
+        </Menu>
+      </MenuBar>
+      <ToolBar>
+        <HBox>
+          <Button onAction="#showNewItemDialog">
+            <tooltip>
+              <Tooltip text="Add a New Todo item."/>
+            </tooltip>
+            <graphic>
+              <ImageView fitWidth="20" fitHeight="20">
+                <Image url="New24.png"/>
+              </ImageView>
+            </graphic>
+          </Button>
+        </HBox>
+      </ToolBar>
+    </VBox>
+  </top>
+  <left>
+    <!-- onMouseClicked="#handleClickListView" not needed abymore -->
+    <ListView fx:id="todoListView" onKeyPressed="#handleKeyPressed">
 
-        </ListView>
-    </left>
-    <center>
-        <VBox style="-fx-background-color: white">
-            <!-- VBox.vgrow="ALWAYS" so textArea fills it out -->
-            <TextArea fx:id="itemDetailsTextArea" VBox.vgrow="ALWAYS" wrapText="true"/>
-            <HBox>
-                <Label text="Due: ">
-                    <font>
-                        <Font name="Times New Roman bold" size="20"/>
-                    </font>
-                </Label>
-                <Label fx:id="deadlineLabel">
-                    <font>
-                        <Font name="Times New Roman bold" size="20"/>
-                    </font>
-                </Label>
-            </HBox>
-        </VBox>
-    </center>
+    </ListView>
+  </left>
+  <center>
+    <VBox style="-fx-background-color: white">
+      <!-- VBox.vgrow="ALWAYS" so textArea fills it out -->
+      <TextArea fx:id="itemDetailsTextArea" VBox.vgrow="ALWAYS" wrapText="true"/>
+      <HBox>
+        <Label text="Due: ">
+          <font>
+            <Font name="Times New Roman bold" size="20"/>
+          </font>
+        </Label>
+        <Label fx:id="deadlineLabel">
+          <font>
+            <Font name="Times New Roman bold" size="20"/>
+          </font>
+        </Label>
+      </HBox>
+    </VBox>
+  </center>
 </BorderPane>
