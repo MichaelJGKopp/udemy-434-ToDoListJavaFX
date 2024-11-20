@@ -38,8 +38,9 @@ public class TodoItem {
     this.deadline = deadline;
   }
 
-  @Override
-  public String toString() {
-    return shortDescription;
-  }
+  // using custom cell factor instead now
+//  @Override
+//  public String toString() {
+//    return shortDescription;
+//  }
 }

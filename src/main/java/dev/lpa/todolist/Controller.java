@@ -2,16 +2,24 @@ package dev.lpa.todolist;
 
 import dev.lpa.todolist.datamodel.TodoData;
 import dev.lpa.todolist.datamodel.TodoItem;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
-
-import java.io.IOException;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 public class Controller {
 
@@ -55,22 +63,47 @@ public class Controller {
 //    TodoData.getInstance().setTodoItems(todoItems);
 
     todoListView.getSelectionModel().selectedItemProperty()
-      .addListener(new ChangeListener<TodoItem>() {
-        @Override
-        public void changed(ObservableValue<? extends TodoItem> observableValue,
-                            TodoItem oldValue, TodoItem newValue) {
-          if(newValue != null) {
-            TodoItem item = todoListView.getSelectionModel().getSelectedItem();
-            itemDetailsTextArea.setText(item.getDetails());
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM d, yyyy");
-            deadlineLabel.setText(item.getDeadline().format(dtf));
+        .addListener(new ChangeListener<TodoItem>() {
+          @Override
+          public void changed(ObservableValue<? extends TodoItem> observableValue,
+              TodoItem oldValue, TodoItem newValue) {
+            if (newValue != null) {
+              TodoItem item = todoListView.getSelectionModel().getSelectedItem();
+              itemDetailsTextArea.setText(item.getDetails());
+              DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+              deadlineLabel.setText(item.getDeadline().format(dtf));
+            }
           }
-        }
-      });
+        });
 
     todoListView.setItems(TodoData.getInstance().getTodoItems()); // data binding
     todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     todoListView.getSelectionModel().selectFirst(); // select first to do list item
+
+    // paint every cell depending on the todoItem e.g. red, update cell text
+    todoListView.setCellFactory(new Callback<ListView<TodoItem>, ListCell<TodoItem>>() {
+      @Override
+      public ListCell<TodoItem> call(ListView<TodoItem> param) {
+        ListCell<TodoItem> cell = new ListCell<>() {
+          @Override
+          protected void updateItem(TodoItem item, boolean empty) {
+            super.updateItem(item, empty);  // default appearance by parent class
+            if (empty) {
+              setText(null);
+            } else {
+              setText(item.getShortDescription());
+              if (item.getDeadline().isBefore(LocalDate.now())) {
+                setTextFill(Color.RED);
+              } else if(item.getDeadline().equals(LocalDate.now().plusDays(1))) {
+                setTextFill(Color.BROWN);
+              }
+            }
+          }
+        };
+
+        return cell;
+      }
+    });
   }
 
   @FXML
@@ -84,7 +117,7 @@ public class Controller {
     try {
       dialog.getDialogPane().setContent(fxmlLoader.load());
 
-    } catch(IOException e) {
+    } catch (IOException e) {
       System.out.println("Couldn't load the dialog");
       e.printStackTrace();
       return;
@@ -94,7 +127,7 @@ public class Controller {
     dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 
     Optional<ButtonType> result = dialog.showAndWait();
-    if(result.isPresent() && result.get() == ButtonType.OK) {
+    if (result.isPresent() && result.get() == ButtonType.OK) {
       DialogController controller = fxmlLoader.getController();
       TodoItem newItem = controller.processResults();  // add item to todoList from dialog fields
 //      todoListView.getItems().setAll(TodoData.getInstance().getTodoItems());  // update visual list
