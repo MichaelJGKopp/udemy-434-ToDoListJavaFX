@@ -7,8 +7,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Optional;
+import java.util.function.Predicate;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,6 +27,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -49,6 +52,14 @@ public class Controller {
 
   @FXML
   private ContextMenu listContextMenu;
+
+  @FXML
+  private ToggleButton filterToggleButton;
+
+  private FilteredList<TodoItem> filteredList;  // wrap filter before ListView
+
+  private Predicate<TodoItem> wantAllItems;
+  private Predicate<TodoItem> wantTodaysItems;
 
   public void initialize() {
 //    TodoItem item1 = new TodoItem(
@@ -101,14 +112,15 @@ public class Controller {
           }
         });
 
+    wantAllItems = o -> true;
+    wantTodaysItems = o -> o.getDeadline().isEqual(LocalDate.now());
+
+    filteredList = new FilteredList<>(TodoData.getInstance().getTodoItems(),
+        wantAllItems);
+
     // wrap SortedList around ObservableList to keep ListView sorted
-    SortedList<TodoItem> sortedList = new SortedList<>(TodoData.getInstance().getTodoItems(),
-        new Comparator<TodoItem>() {
-          @Override
-          public int compare(TodoItem o1, TodoItem o2) {
-            return o1.getDeadline().compareTo(o2.getDeadline());
-          }
-        });
+    SortedList<TodoItem> sortedList = new SortedList<>(filteredList,
+        Comparator.comparing(TodoItem::getDeadline));
 
 //    todoListView.setItems(TodoData.getInstance().getTodoItems()); // data binding
     todoListView.setItems(sortedList);
@@ -214,6 +226,24 @@ public class Controller {
 
     if (result.isPresent() && (result.get() == ButtonType.OK)) {
       TodoData.getInstance().deleteTodoItem(item);
+    }
+  }
+
+  public void handleFilterButton() {
+    TodoItem selectedItem = todoListView.getSelectionModel().getSelectedItem();
+    if(filterToggleButton.isSelected()) {
+      filteredList.setPredicate(wantTodaysItems);
+      if(filteredList.isEmpty()) {
+        itemDetailsTextArea.clear();
+        deadlineLabel.setText("");
+      } else if(filteredList.contains(selectedItem)) {
+        todoListView.getSelectionModel().select(selectedItem);
+      } else {
+        todoListView.getSelectionModel().selectFirst();
+      }
+    } else {
+      filteredList.setPredicate(wantAllItems);
+      todoListView.getSelectionModel().select(selectedItem);
     }
   }
 }
