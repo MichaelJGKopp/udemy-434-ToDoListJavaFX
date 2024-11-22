@@ -5,9 +5,11 @@ import dev.lpa.todolist.datamodel.TodoItem;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.Optional;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -99,7 +101,17 @@ public class Controller {
           }
         });
 
-    todoListView.setItems(TodoData.getInstance().getTodoItems()); // data binding
+    // wrap SortedList around ObservableList to keep ListView sorted
+    SortedList<TodoItem> sortedList = new SortedList<>(TodoData.getInstance().getTodoItems(),
+        new Comparator<TodoItem>() {
+          @Override
+          public int compare(TodoItem o1, TodoItem o2) {
+            return o1.getDeadline().compareTo(o2.getDeadline());
+          }
+        });
+
+//    todoListView.setItems(TodoData.getInstance().getTodoItems()); // data binding
+    todoListView.setItems(sortedList);
     todoListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     todoListView.getSelectionModel().selectFirst(); // select first to do list item
 
