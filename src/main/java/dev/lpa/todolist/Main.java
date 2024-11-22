@@ -26,6 +26,13 @@ public class Main extends Application {
   public void start(Stage stage) throws IOException {
     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("mainwindow.fxml"));
     stage.setTitle("Todo List");
+//    Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+//    Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
+//    Application.setUserAgentStylesheet(new NordLight().getUserAgentStylesheet());
+//    Application.setUserAgentStylesheet(new NordDark().getUserAgentStylesheet());
+//    Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+//    Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+//    Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
     Scene scene = new Scene(fxmlLoader.load(), 900, 500);
     stage.setScene(scene);
 
