@@ -25,7 +25,7 @@
         <Menu text="File">
           <MenuItem text="New..." onAction="#showNewItemDialog"/>
           <SeparatorMenuItem/>
-          <MenuItem text="Exit"/>
+          <MenuItem text="Exit" onAction="#handleExit"/>
         </Menu>
         <Menu text="File2">
           <MenuItem text="New...2"/>
